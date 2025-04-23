@@ -1,0 +1,39 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["maven"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "matchPackagePatterns": ["^org\\.asciidoctor"],
+      "groupName": "asciidoctor dependencies"
+    },
+    {
+      "matchDepNames": ["hakimel/reveal.js"],
+      "automerge": false,
+      "stabilityDays": 7
+    }
+  ],
+  "maven": {
+    "enabled": true
+  },
+  "regexManagers": [
+    {
+      "fileMatch": ["^pom\\.xml$"],
+      "matchStrings": [
+        "<revealjs\\.version>(?<currentValue>.*?)</revealjs\\.version>"
+      ],
+      "depNameTemplate": "hakimel/reveal.js",
+      "datasourceTemplate": "github-releases"
+    }
+  ],
+  "labels": ["dependencies"],
+  "schedule": ["every weekend"],
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5
+}

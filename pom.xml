@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.tobiasbell</groupId>
+  <artifactId>presentations</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compile.skip>true</maven.compile.skip>
+    <skipTests>true</skipTests>
+    <revealjs.version>5.2.1</revealjs.version>
+  </properties>
+
+  <build>
+    <defaultGoal>process-resources</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>io.github.download-maven-plugin</groupId>
+        <artifactId>download-maven-plugin</artifactId>
+        <version>2.0.0</version>
+        <executions>
+          <execution>
+            <id>install-revealjs</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>wget</goal>
+            </goals>
+            <configuration>
+              <url>https://github.com/hakimel/reveal.js/archive/${revealjs.version}.zip</url>
+              <unpack>true</unpack>
+              <outputFileName>reveal.js-${revealjs.version}.zip</outputFileName>
+              <outputDirectory>${project.build.directory}/generated-docs</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.asciidoctor</groupId>
+        <artifactId>asciidoctor-maven-plugin</artifactId>
+        <version>3.2.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctorj</artifactId>
+            <version>3.0.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctorj-revealjs</artifactId>
+            <version>5.2.0</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>asciidoc-to-html</id>
+            <phase>generate-resources</phase>
+            <configuration>
+              <sourceDirectory>${project.basedir}/src/index</sourceDirectory>
+            </configuration>
+            <goals>
+              <goal>process-asciidoc</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>slides</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>process-asciidoc</goal>
+            </goals>
+            <configuration>
+              <backend>revealjs</backend>
+              <sourceDirectory>${project.basedir}/src/slides</sourceDirectory>
+              <attributes>
+                <revealjsdir>reveal.js-${revealjs.version}</revealjsdir>
+              </attributes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>
