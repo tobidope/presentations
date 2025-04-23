@@ -11,10 +11,18 @@
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compile.skip>true</maven.compile.skip>
     <skipTests>true</skipTests>
     <revealjs.version>5.2.1</revealjs.version>
   </properties>
+
+  <distributionManagement>
+    <site>
+      <id>github</id>
+      <url>scm:git:https://github.com/tobidope/presentations.git</url>
+    </site>
+  </distributionManagement>
 
   <build>
     <defaultGoal>process-resources</defaultGoal>
@@ -82,7 +90,23 @@
           </execution>
         </executions>
       </plugin>
-
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-scm-publish-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <scmBranch>gh-pages</scmBranch>
+          <content>${project.build.directory}/generated-docs</content>
+        </configuration>
+        <executions>
+          <execution>
+            <id>gh-pages-upload</id>
+            <goals>
+              <goal>publish-scm</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
