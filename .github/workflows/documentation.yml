@@ -20,7 +20,7 @@ jobs:
         cache: maven
 
     - name: Generate documents
-      run: mvn --batch-mode --update-snapshots default-goal
+      run: mvn --batch-mode
 
     - name: Upload to Github Pages
       run: mvn --batch-mode scm-publish:publish-scm
