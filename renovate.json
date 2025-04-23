@@ -1,30 +1,42 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "packageRules": [
     {
-      "matchManagers": ["maven"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchManagers": [
+        "maven"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "automerge": true
     },
     {
-      "matchPackagePatterns": ["^org\\.asciidoctor"],
-      "groupName": "asciidoctor dependencies"
+      "groupName": "asciidoctor dependencies",
+      "matchPackageNames": [
+        "/^org\\.asciidoctor/"
+      ]
     },
     {
-      "matchDepNames": ["hakimel/reveal.js"],
+      "matchDepNames": [
+        "hakimel/reveal.js"
+      ],
       "automerge": false,
-      "stabilityDays": 7
+      "minimumReleaseAge": "7 days"
     }
   ],
   "maven": {
     "enabled": true
   },
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": ["^pom\\.xml$"],
+      "customType": "regex",
+      "fileMatch": [
+        "^pom\\.xml$"
+      ],
       "matchStrings": [
         "<revealjs\\.version>(?<currentValue>.*?)</revealjs\\.version>"
       ],
@@ -32,8 +44,12 @@
       "datasourceTemplate": "github-releases"
     }
   ],
-  "labels": ["dependencies"],
-  "schedule": ["every weekend"],
+  "labels": [
+    "dependencies"
+  ],
+  "schedule": [
+    "every weekend"
+  ],
   "prHourlyLimit": 2,
   "prConcurrentLimit": 5
 }
