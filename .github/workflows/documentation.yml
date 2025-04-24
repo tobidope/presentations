@@ -3,6 +3,9 @@ name: Generate and Publish Documentation
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'pom.xml'
+      - 'src/**'
   workflow_dispatch:
 
 jobs:
@@ -20,12 +23,12 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Generate documents
-        run: mvn --batch-mode
+        run: ./mvnw --batch-mode
       - name: Setup git
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
       - name: Upload to Github Pages
-        run: mvn --batch-mode scm-publish:publish-scm
+        run: ./mvnw --batch-mode scm-publish:publish-scm
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
