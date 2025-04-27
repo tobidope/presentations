@@ -7,6 +7,7 @@
   <groupId>de.tobiasbell</groupId>
   <artifactId>presentations</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
   <properties>
     <maven.compiler.release>21</maven.compiler.release>
@@ -86,6 +87,55 @@
               <attributes>
                 <revealjsdir>reveal.js-${revealjs.version}</revealjsdir>
               </attributes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.7.1</version>
+        <configuration>
+          <tarLongFileMode>gnu</tarLongFileMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>bundle-src</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <formats>
+                <format>tar.bz2</format>
+              </formats>
+              <descriptorRefs>
+                <ref>src</ref>
+              </descriptorRefs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>bundle-docs</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <inlineDescriptors>
+                <inlineDescriptor>
+                  <id>docs</id>
+                  <formats>
+                    <format>tar.bz2</format>
+                  </formats>
+                  <fileSets>
+                    <fileSet>
+                      <directory>${project.build.directory}/generated-docs</directory>
+                      <useDefaultExcludes>false</useDefaultExcludes>
+                      <outputDirectory>/</outputDirectory>
+                    </fileSet>
+                  </fileSets>
+                </inlineDescriptor>
+              </inlineDescriptors>
             </configuration>
           </execution>
         </executions>
