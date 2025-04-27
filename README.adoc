@@ -1,4 +1,4 @@
 = Präsenationen mit Asciidoc und Maven erstellen
 
-Erzeugt Präsentationen aus dem Ordner `src/slides` und legt sie unter `target/slides` ab. Mit dem https://maven.apache
-.org/plugins/maven-scm-publish-plugin[Maven SCM Publish Plugin] werden die Präsentationen auf GitHub Pages veröffentlicht.
+Erzeugt Präsentationen aus dem Ordner `src/slides` und legt sie unter `target/slides` ab. Mit dem
+https://maven.apache.org/plugins/maven-scm-publish-plugin[Maven SCM Publish Plugin] werden die Präsentationen auf GitHub Pages veröffentlicht.
