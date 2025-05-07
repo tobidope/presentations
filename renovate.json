@@ -34,8 +34,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "^pom\\.xml$"
+      "managerFilePatterns": [
+        "/^pom\\.xml$/"
       ],
       "matchStrings": [
         "<revealjs\\.version>(?<currentValue>.*?)</revealjs\\.version>"
